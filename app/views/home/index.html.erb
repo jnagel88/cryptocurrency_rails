@@ -1,2 +1,11 @@
 <h1>Home#index</h1>
 <p>Find me in app/views/home/index.html.erb</p>
+
+<div>
+  <% @coins.each do |coin| %>
+    <% if @my_coins.include?(coin['symbol']) %>
+      <%= coin['name'] %> : <%= coin['price_usd'] %> <br/>
+      Rank: <%= coin['rank'] %> <br />
+    <% end %>
+  <% end %>
+</div>
