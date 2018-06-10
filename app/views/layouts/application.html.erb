@@ -12,10 +12,14 @@
 
   <body>
 
-    <%= render 'home/navbar' %>
 
-    <div class="container">
-      <%= yield %>
+
+  <%= render 'shared/navbar' %>
+
+
+  <div class="container">
+    <%= render 'shared/flash' %>
+    <%= yield %>
     </div>
 
   </body>
