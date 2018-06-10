@@ -1,0 +1,23 @@
+<h1>Crypto Currency Lookup</h1>
+
+<div>
+	<%= form_tag lookup_path, method: "POST" do  %>
+	  <%= text_field_tag 'sym', nil, placeholder:'Enter Crypto Symbol', size: 50 %>
+	  <%= submit_tag "look up crypto" %>
+	<% end %>
+</div>
+
+
+
+<div>
+	<% if @symbol %>
+	  <% @coins.each do |coin| %>
+	    <% if @symbol.include?(coin['symbol']) %>
+	      <%= @symbol %> <%= coin['name'] %>: <%= coin['price_usd'] %><br />
+	      Rank: <%= coin['rank'] %><br />
+	    <% end %>
+	  <% end %>
+	  <% else %>
+	  	Please enter a valid coin
+  <% end %>
+</div>
