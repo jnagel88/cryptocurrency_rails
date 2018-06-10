@@ -10,13 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180610202121) do
+ActiveRecord::Schema.define(version: 20180610214719) do
 
   create_table "cryptos", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.string "symbol"
     t.integer "user_id"
-    t.decimal "cost_per", precision: 10
-    t.decimal "amount_owned", precision: 10
+    t.float "cost_per", limit: 24
+    t.float "amount_owned", limit: 24
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_cryptos_on_user_id"
