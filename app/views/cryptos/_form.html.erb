@@ -1,3 +1,5 @@
+
+
 <%= form_with(model: crypto, local: true) do |form| %>
   <% if crypto.errors.any? %>
     <div id="error_explanation">
@@ -13,10 +15,10 @@
 
   <div class="field">
     <%= form.label :symbol %>
-    <%= form.text_field :symbol, id: :crypto_symbol, :value => f.object.name.capitalize %>
+    <%= form.text_field :symbol, id: :crypto_symbol %>
   </div>
 
-  <div class="field">
+  <div class="field hidden">
     <%= form.label :user_id %>
     <%= form.number_field :user_id, id: :crypto_user_id, value: current_user.id %>
   </div>

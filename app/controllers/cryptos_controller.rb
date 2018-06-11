@@ -90,4 +90,5 @@ class CryptosController < ApplicationController
       @response = Net::HTTP.get(@uri)
       @coins = JSON.parse(@response)
     end
+
 end
