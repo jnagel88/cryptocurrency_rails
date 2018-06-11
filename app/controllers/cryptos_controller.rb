@@ -8,6 +8,7 @@ class CryptosController < ApplicationController
   # GET /cryptos.json
   def index
     @cryptos = Crypto.all
+    @profit_loss = 0
   end
 
   # GET /cryptos/1

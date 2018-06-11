@@ -1,27 +1,71 @@
+<% @coins.each do |coin| %>
+  <% if @crypto.symbol.include?(coin['symbol']) %>
 
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= coin['rank'] %>.  <%= coin['name'] %>(<%= coin['symbol'] %>)</h3>
+      </div>
 
-<p>
-  <strong>Symbol:</strong>
-  <%= @crypto.symbol %>
-</p>
+      <div class="panel-body">
+        <div class="col-sm-4">
+          <h4>Prices</h4>
+          <p><b>Price <small>(USD)</small>:</b> $<%= coin['price_usd'] %> </p>
+          <p><b>Price <small>(BTC)</small>:</b> <%= coin['price_btc'] %> </p>
+          <p><b>24-HR Volume <small>(USD)</small>:</b> <%= number_to_currency(coin['24h_volume_usd']) %></p>
+          <p><b>Market Cap <small>(USD)</small>:</b> <%= number_to_currency(coin['market_cap_usd']) %></p>
+        </div>
 
-<p>
-  <strong>User:</strong>
-  <%= @crypto.user_id %>
-</p>
+        <div class="col-sm-4">
+          <h4>Market Supply</h4>
+          <p><b>Available:</b> <%= coin['available_supply'] %> <%= coin['symbol'] %></p>
+          <p><b>Total:</b> <%= coin['total_supply'] %> <%= coin['symbol'] %></p>
+          <p><b>Max:</b> <%= coin['max_supply'] %> <%= coin['symbol'] %></p>
+        </div>
 
-<p>
-  <strong>Cost per:</strong>
-  <%= @crypto.cost_per %>
-</p>
+        <div class="col-sm-4">
+          <h4>Market change</h4>
+          <p><b>1 Hour:</b> <%= number_to_percentage(coin['percent_change_1h']) %></p>
+          <p><b>24 hours:</b> <%= number_to_percentage(coin['percent_change_24h']) %></p>
+          <p><b>7 Days:</b> <%= number_to_percentage(coin['percent_change_7d']) %></p>
+        </div>
+      </div>
+    </div>
 
-<p>
-  <strong>Amount owned:</strong>
-  <%= @crypto.amount_owned %>
-</p>
+  <% end %>
+<% end %>
 
-<div>
-  <%= link_to 'Back', cryptos_path, class:'btn btn-default' %>
-  <%= link_to 'Edit', edit_crypto_path(@crypto), class:'btn btn-warning' %>
-  <%= link_to 'Delete', crypto_path(@crypto), method: :delete, class:'btn btn-danger', data: { confirm: 'Are you sure?' } %>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">My Portfolio</h3>
+  </div>
+
+  <div class="panel-body">
+    <table class="table">
+      <tr>
+        <th>Total Current Value</th>
+        <th>Profit/Loss</th>
+        <th>Cost Paid per unit</th>
+        <th>Amount owned</th>
+        <th>Total Paid</th>
+      </tr>
+
+      <% @coins.each do |coin| %>
+        <% if @crypto.symbol.include?(coin['symbol']) %>
+          <tr>
+            <td>$<%= coin['price_usd'].to_f * @crypto.amount_owned %></td>
+            <td>$<%= @profit_loss = ((coin['price_usd'].to_f * @crypto.amount_owned) - (@crypto.cost_per * @crypto.amount_owned)) %></td>
+            <td>$<%= @crypto.cost_per %></td>
+            <td><%= @crypto.amount_owned %></td>
+            <td>$<%= @crypto.amount_owned * @crypto.cost_per %></td>
+          </tr>
+        <% end %>
+      <% end %>
+    </table>
+  </div>
+
+  <div class="panel-footer">
+    <%= link_to 'Back', cryptos_path, class:'btn btn-default' %>
+    <%= link_to 'Edit', edit_crypto_path(@crypto), class:'btn btn-warning' %>
+    <%= link_to 'Delete', crypto_path(@crypto), method: :delete, class:'btn btn-danger', data: { confirm: 'Are you sure?' } %>
+  </div>
 </div>

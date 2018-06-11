@@ -13,7 +13,7 @@
 
   <div class="field">
     <%= form.label :symbol %>
-    <%= form.text_field :symbol, id: :crypto_symbol %>
+    <%= form.text_field :symbol, id: :crypto_symbol, :value => f.object.name.capitalize %>
   </div>
 
   <div class="field">
