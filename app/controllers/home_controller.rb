@@ -2,6 +2,7 @@ class HomeController < ApplicationController
 before_action :api_call, only:[:index, :lookup]
 
   def index
+    @page_results = @coins.paginate(params[:page], 20)
   end
 
   def lookup

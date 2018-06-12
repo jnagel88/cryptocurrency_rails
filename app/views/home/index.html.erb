@@ -1,6 +1,8 @@
 <h1>top 100 Cryptocurrencies</h1>
 
-
+<div class="digg_pagination">
+  <%= will_paginate @page_results, class:'pagination' %>
+</div>
 
 <table class="table table-striped table-hover">
   <thead>
@@ -20,7 +22,7 @@
   </thead>
 
   <tbody>
-    <% @coins.each do |coin| %>
+    <% @page_results.each do |coin| %>
       <tr>
         <td><%= coin['rank'] %>.</td>
         <td><%= "#{coin['name']} (#{coin['symbol']})" %></td>
@@ -35,3 +37,7 @@
     <% end %>
   </tbody>
 </table>
+
+<div class="digg_pagination">
+  <%= will_paginate @page_results, class:'pagination' %>
+</div>
