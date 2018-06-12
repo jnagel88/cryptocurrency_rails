@@ -98,3 +98,9 @@
 *:first-child + html .digg_pagination {
   overflow: hidden; }
 
+@media (max-width: 767px) {
+  input.full-width {
+    width: 100%;
+    margin-top: 10px;
+  }
+}

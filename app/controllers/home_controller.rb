@@ -17,11 +17,12 @@ before_action :api_call, only:[:index, :lookup]
       require 'net/http'
       require 'json'
 
+      @coin_list= []
       @url = 'https://api.coinmarketcap.com/v1/ticker/'
       @uri = URI(@url)
       @response = Net::HTTP.get(@uri)
       @coins = JSON.parse(@response)
-      @my_coins = ["BTC", "XRP", "ADA", "XLM", "STEEM" ]
+      @coins.map{|coin| @coin_list.push(coin['symbol'])}
     end
 
 end

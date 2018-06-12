@@ -1,23 +1,67 @@
-<h1>Crypto Currency Lookup</h1>
+<div class="col-md-4 col-md-offset-4">
+  <div class="panel panel-default">
 
-<div>
-	<%= form_tag lookup_path, method: "POST" do  %>
-	  <%= text_field_tag 'sym', nil, placeholder:'Enter Crypto Symbol', size: 50 %>
-	  <%= submit_tag "look up crypto" %>
-	<% end %>
+    <div class="panel-heading">
+      <h2 class="panel-title">Crypto Currency Lookup</h2>
+    </div>
+
+    <div class="panel-body form-inline">
+
+      <%= form_tag lookup_path, method: "POST" do  %>
+        <%= text_field_tag 'sym', nil, placeholder:'Enter Crypto Symbol', class:'form-control' %>
+        <%= submit_tag "Find Crypto", class:'btn btn-primary full-width' %>
+      <% end %>
+    </div>
+
+    <div class="panel-footer">
+    </div>
+  </div>
 </div>
 
+<% if @symbol %>
+  <div class="col-md-6 col-md-offset-3">
+    <div class="panel panel-default">
 
+      <div class="panel-heading">
+        <h2 class="panel-title"><%= coin_name %></h2>
+      </div>
 
-<div>
-	<% if @symbol %>
-	  <% @coins.each do |coin| %>
-	    <% if @symbol.include?(coin['symbol']) %>
-	      <%= @symbol %> <%= coin['name'] %>: <%= coin['price_usd'] %><br />
-	      Rank: <%= coin['rank'] %><br />
-	    <% end %>
-	  <% end %>
-	  <% else %>
-	  	Please enter a valid coin
-  <% end %>
-</div>
+      <div class="panel-body">
+        <% if @coin_list.include?(@symbol) %>
+          <% @coins.each do |coin| %>
+            <% if @symbol.include?(coin['symbol']) %>
+
+              <div class="col-sm-4">
+                <h4>Prices</h4>
+                <p><b>Price <small>(USD)</small>:</b> $<%= coin['price_usd'] %> </p>
+                <p><b>Price <small>(BTC)</small>:</b> <%= coin['price_btc'] %> </p>
+                <p><b>24-HR Volume <small>(USD)</small>:</b> <%= number_to_currency(coin['24h_volume_usd']) %></p>
+                <p><b>Market Cap <small>(USD)</small>:</b> <%= number_to_currency(coin['market_cap_usd']) %></p>
+                <br />
+              </div>
+
+              <div class="col-sm-4">
+                <h4>Market Supply</h4>
+                <p><b>Available:</b> <%= number_with_del_prec(coin['available_supply'], 0) %> <%= coin['symbol'] %></p>
+                <p><b>Total:</b> <%= number_with_del_prec(coin['total_supply'], 0) %> <%= coin['symbol'] %></p>
+                <p><b>Max:</b> <%= number_with_del_prec(coin['max_supply'], 0) %> <%= coin['symbol'] %></p>
+                <br />
+              </div>
+
+              <div class="col-sm-4">
+                <h4>Market change</h4>
+                <p><b>1 Hour:</b> <%= number_to_percentage(coin['percent_change_1h'],precision: 2) %></p>
+                <p><b>24 hours:</b> <%= number_to_percentage(coin['percent_change_24h'],precision: 2) %></p>
+                <p><b>7 Days:</b> <%= number_to_percentage(coin['percent_change_7d'],precision: 2) %></p>
+              </div>
+            <% end %>
+          <% end %>
+        <% else %>
+          Please enter a valid coin
+        <% end %>
+      </div>
+      <div class="panel-footer">
+      </div>
+    </div>
+  </div>
+<% end %>
