@@ -1,11 +1,14 @@
 class CryptosController < ApplicationController
   before_action :set_crypto, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
+  before_action :correct_user, only: [:edit, :update, :destroy, :show]
+  before_action :api_call, only:[:index, :show]
 
   # GET /cryptos
   # GET /cryptos.json
   def index
     @cryptos = Crypto.all
+    @profit_loss = 0
   end
 
   # GET /cryptos/1
@@ -72,4 +75,20 @@ class CryptosController < ApplicationController
     def crypto_params
       params.require(:crypto).permit(:symbol, :user_id, :cost_per, :amount_owned)
     end
+
+    def correct_user
+      @correct = current_user.cryptos.find_by(id:params[:id])
+      redirect_to cryptos_path, notice: "Your not authorized to access that entry" if @correct.nil?
+    end
+
+    def api_call
+      require 'net/http'
+      require 'json'
+
+      @url = 'https://api.coinmarketcap.com/v1/ticker/'
+      @uri = URI(@url)
+      @response = Net::HTTP.get(@uri)
+      @coins = JSON.parse(@response)
+    end
+
 end

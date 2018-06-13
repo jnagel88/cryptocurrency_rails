@@ -1,12 +1,43 @@
-<h1>Home#index</h1>
-<p>Find me in app/views/home/index.html.erb</p>
+<h1>top 100 Cryptocurrencies</h1>
+
+<div class="digg_pagination">
+  <%= will_paginate @page_results, class:'pagination' %>
+</div>
+
+<table class="table table-striped table-hover">
+  <thead>
+  <tr>
+    <th>Rank</th>
+    <th>Name</th>
+    <th>Current Price <small>USD</small></th>
+    <th>Market Cap <small>USD</small></th>
+    <th>Available Supply</th>
+    <th>Total Supply</th>
+    <th>1 HR Change</th>
+    <th>24 HR Change</th>
+    <th>7 DAY Change</th>
 
 
-<div>
-  <% @coins.each do |coin| %>
-    <% if @my_coins.include?(coin['symbol']) %>
-      <%= coin['name'] %>: <%= coin['price_usd'] %><br />
-      Rank: <%= coin['rank'] %><br />
+  </tr>
+  </thead>
+
+  <tbody>
+    <% @page_results.each do |coin| %>
+      <tr>
+        <td><%= coin['rank'] %>.</td>
+        <td><%= "#{coin['name']} (#{coin['symbol']})" %></td>
+        <td>$<%= number_with_delimiter(coin['price_usd']) %></td>
+        <td>$<%= number_with_del_prec(coin['market_cap_usd'], 0) %></td>
+        <td><%= "#{number_with_del_prec(coin['available_supply'], 0)} #{coin['symbol']}" %></td>
+        <td><%= "#{number_with_del_prec(coin['total_supply'], 0)} #{coin['symbol']}" %></td>
+        <td><%= number_to_percentage(coin['percent_change_1h'], precision: 2) %></td>
+        <td><%= number_to_percentage(coin['percent_change_24h'], precision: 2) %></td>
+        <td><%= number_to_percentage(coin['percent_change_7d'], precision: 2) %></td>
+      </tr>
     <% end %>
-  <% end %>
+  </tbody>
+</table>
+
+<div class="digg_pagination">
+  <%= will_paginate @page_results, class:'pagination' %>
 </div>
