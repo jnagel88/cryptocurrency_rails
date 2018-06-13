@@ -21,10 +21,10 @@
     <% @cryptos.each do |crypto| %>
       <% if crypto.user_id == current_user.id %>
       <% crypto.symbol = crypto.symbol.upcase if crypto %>
-        <tr>
+        <tr class="clickable-row" data-href="/cryptos/<%= crypto.id %>">
           <% @coins.each do |coin| %>
             <% if crypto.symbol.include?(coin['symbol']) %>
-              <td><%= link_to "#{coin['name']}(#{crypto.symbol})", crypto %></td>
+              <td><%= "#{coin['name']}(#{crypto.symbol})" %></td>
               <td>$<%= coin['price_usd'] %></td>
               <td><%= number_to_percentage(coin['percent_change_1h'], precision: 2) %></td>
               <td><%= number_to_percentage(coin['percent_change_24h'], precision: 2) %></td>
